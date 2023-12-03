@@ -24,10 +24,6 @@ for i, line in enumerate(lines):
     start = 0
 
     j = 0
-    while j < m and not line[j].isdigit():
-        j += 1
-    if j == m:
-        continue
 
     while j < m:
         start = j

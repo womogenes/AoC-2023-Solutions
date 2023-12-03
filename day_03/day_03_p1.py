@@ -19,10 +19,6 @@ for i, line in enumerate(lines):
     start = 0
 
     j = 0
-    while j < m and not line[j].isdigit():
-        j += 1
-    if j == m:
-        continue
 
     while j < m:
         start = j
@@ -40,7 +36,6 @@ for i, line in enumerate(lines):
         # Number ended, look around
         if is_symbol(i, start-1) or is_symbol(i, j):
             ans += num
-            j += 1
             continue
 
         for k in range(start-1, j+1):
