@@ -1,8 +1,8 @@
 with open("./day_06.in") as fin:
-    lines = fin.read().strip().split()
+    lines = fin.read().strip().split("\n")
 
-times = [45, 97, 72, 95]
-dists = [305, 1062, 1110, 1695]
+times = list(map(int, lines[0].split()[1:]))
+dists = list(map(int, lines[1].split()[1:]))
 
 
 def ways(t, d):

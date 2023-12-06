@@ -1,11 +1,9 @@
 with open("./day_06.in") as fin:
-    lines = fin.read().strip().split()
+    lines = fin.read().strip().split("\n")
 
-""" times = [45, 97, 72, 95]
-dists = [305, 1062, 1110, 1695] """
 
-times = [7, 15, 30]
-dists = [9, 40, 200]
+t = int("".join(lines[0].split()[1:]))
+d = int("".join(lines[1].split()[1:]))
 
 
 def ways(t, d):
@@ -18,14 +16,4 @@ def ways(t, d):
     return count
 
 
-ans = []
-for t, d in zip(times, dists):
-    ans.append(ways(t, d))
-
-p = 1
-for x in ans:
-    p *= x
-
-print(p)
-
-print(ways(45977295, 305106211101695))
+print(ways(t, d))
