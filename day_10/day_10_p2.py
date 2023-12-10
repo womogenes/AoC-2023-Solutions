@@ -1,7 +1,4 @@
-from functools import lru_cache
-from collections import deque
-
-with open("./day_10_2.in") as fin:
+with open("./day_10.in") as fin:
     lines = fin.read().strip().split("\n")
 
 n, m = len(lines), len(lines[0])
@@ -20,29 +17,42 @@ def get_nbrs(i, j):
     return res
 
 
+dirs = {
+    "|": [(1, 0), (-1, 0)],
+    "-": [(0, 1), (0, -1)],
+    "L": [(-1, 0), (0, 1)],
+    "J": [(-1, 0), (0, -1)],
+    "7": [(1, 0), (0, -1)],
+    "F": [(1, 0), (0, 1)],
+    ".": [],
+}
+
+
 def get_dnbrs(i, j):
     res = []
     if lines[i][j] == "S":
         for di, dj in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
             ii, jj = i + di, j + dj
+            didjs = []  # Values of di and dj that link up
             if not (0 <= ii < n and 0 <= jj < m):
                 continue
 
             if (i, j) in list(get_nbrs(ii, jj)):
+                didjs.append((i, j))
                 res.append((di, dj))
+
+        # Find which character corresponds to this one
+        # "ds" for "dirs"
+        for char, ds in dirs.items():
+            if sorted(ds) == sorted(didjs):
+                break
+
+        lines[i].replace("S", char)
+
         return res
 
     else:
-        res = {
-            "|": [(1, 0), (-1, 0)],
-            "-": [(0, 1), (0, -1)],
-            "L": [(-1, 0), (0, 1)],
-            "J": [(-1, 0), (0, -1)],
-            "7": [(1, 0), (0, -1)],
-            "F": [(1, 0), (0, 1)],
-            ".": [],
-        }[lines[i][j]]
-        return res
+        return dirs[lines[i][j]]
 
 
 si, sj = None, None
@@ -74,38 +84,11 @@ while len(stack) > 0:
 def count_invs(i, j):
     # Everything up to (but not including) j in line i
     line = lines[i]
-
-    k = 0
     count = 0
-    while k < j:
-        if (i, k) not in visited:
-            k += 1
+    for k in range(j):
+        if not (i, k) in visited:
             continue
-
-        if line[k] == "|":
-            count += 1
-            k += 1
-            continue
-
-        if line[k] == "L":
-            k += 1
-            while line[k] == "-":
-                k += 1
-            if line[k] == "7":
-                count += 1
-            k += 1
-            continue
-
-        if line[k] == "F" or line[k] == "S":
-            k += 1
-            while line[k] == "-":
-                k += 1
-            if line[k] == "J":
-                count += 1
-            k += 1
-            continue
-
-        k += 1
+        count += line[k] in {"J", "L", "|"}
 
     return count
 

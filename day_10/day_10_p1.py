@@ -1,4 +1,3 @@
-from functools import lru_cache
 from collections import deque
 
 with open("./day_10.in") as fin:
