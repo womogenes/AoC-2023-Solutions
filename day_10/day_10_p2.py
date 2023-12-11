@@ -64,7 +64,6 @@ for i, line in enumerate(lines):
 
 # Do a BFS
 visited = set()
-coords = []
 dists = {}
 stack = [(si, sj)]
 while len(stack) > 0:
@@ -72,7 +71,6 @@ while len(stack) > 0:
     if top in visited:
         continue
     visited.add(top)
-    coords.append(top)
 
     for nbr in list(get_nbrs(*top)):
         if nbr in visited:
@@ -98,12 +96,7 @@ for i, line in enumerate(lines):
     for j in range(m):
         if not (i, j) in visited:
             invs = count_invs(i, j)
-            if invs > 0:
-                # print(i, str(j).ljust(3), str(invs).ljust(
-                # 5), line, line[j], end="  ")
-                if invs % 2 == 1:
-                    # print("*****", end="")
-                    ans += 1
-                # print()
+            if invs % 2 == 1:
+                ans += 1
 
 print(ans)
